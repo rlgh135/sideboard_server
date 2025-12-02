@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>WebSocket Test</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.1/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+</head>
+<body>
+<h2>WebSocket Connection Test</h2>
+<button onclick="connect()">1. 연결하기 (Connect)</button>
+<button onclick="sendMoveTest()">2. 카드 이동 메시지 보내기</button>
+<div id="status">상태: 연결 안됨</div>
+<ul id="messages"></ul>
+
+<script>
+    var stompClient = null;
+
+    function connect() {
+        var socket = new SockJS('/ws'); // 설정한 엔드포인트
+        stompClient = Stomp.over(socket);
+        stompClient.connect({}, function (frame) {
+            document.getElementById("status").innerText = "상태: 연결 성공! (Connected)";
+            console.log('Connected: ' + frame);
+
+            // 구독 설정 (/sub/board/1)
+            stompClient.subscribe('/sub/board/1', function (message) {
+                showGreeting(JSON.parse(message.body));
+            });
+        });
+    }
+
+    function sendMoveTest() {
+        // 1번 카드(1000.0)와 2번 카드(2000.0) 사이인 1500.0이 나와야 함
+        // 테스트할 때는 실제 DB에 있는 ID를 넣어야 합니다!
+        // 아래 ID값(100, 1, 2)은 위 SQL insert 결과 ID에 맞춰 변경하세요.
+        stompClient.send("/pub/card/move", {}, JSON.stringify({
+            'cardId': 3,         // 새로 만든(혹은 옮길) 카드 ID (DB에 있어야 함)
+            'targetColumnId': 1,
+            'prevCardId': 1,     // 첫번째 카드 ID
+            'nextCardId': 2      // 두번째 카드 ID
+        }));
+    }
+
+    function showGreeting(message) {
+        var li = document.createElement("li");
+        li.appendChild(document.createTextNode("수신된 메시지: 카드ID " + message.cardId));
+        document.getElementById("messages").appendChild(li);
+    }
+</script>
+</body>
+</html>
