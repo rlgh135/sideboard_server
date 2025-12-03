@@ -45,7 +45,7 @@ class CardConcurrencyTest {
             executorService.execute(() -> {
                 try {
                     // DTO생성, ID만 중요
-                    CardMoveRequest request = new CardMoveRequest(targetCardId, 2L, null, null);
+                    CardMoveRequest request = new CardMoveRequest(targetCardId, 2L, null, null, "test-user");
                     // reflection 등으로 필드 세팅이 어렵다면 DTO에 @Setter나 @AllArgsConstructor 잠시 추가 추천
                     // 여기선 편의상 DTO 필드를 public으로 가정하거나,
                     // CardMoveRequest에 생성자를 추가해서 테스트하세요.

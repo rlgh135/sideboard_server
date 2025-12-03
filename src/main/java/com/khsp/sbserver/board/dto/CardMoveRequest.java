@@ -14,4 +14,6 @@ public class CardMoveRequest {
     private Long targetColumnId;
     private Long prevCardId;    // 내 위의 카드. 없다면 null
     private Long nextCardId;    // 내 아래의 카드. 없다면 null
+
+    private String clientUuid;
 }
