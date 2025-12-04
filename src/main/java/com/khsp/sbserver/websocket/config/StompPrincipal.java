@@ -1,0 +1,16 @@
+package com.khsp.sbserver.websocket.config;
+
+import java.security.Principal;
+
+public class StompPrincipal implements Principal {
+    private final String name;
+
+    public StompPrincipal (String name) {
+        this.name = name;
+    }
+
+    @Override
+    public String getName() {
+        return this.name;   // convertAndSendToUser의 식별자
+    }
+}
