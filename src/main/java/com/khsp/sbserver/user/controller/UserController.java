@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true") // ★ 중요: 인증 쿠키 허용
 public class UserController {
     private final UserRepositoty userRepositoty;
 

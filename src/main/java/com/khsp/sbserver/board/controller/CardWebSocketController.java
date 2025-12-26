@@ -71,12 +71,14 @@ public class CardWebSocketController {
                 errorPayload.put("type", "ERROR");
                 errorPayload.put("message", e.getMessage());
                 errorPayload.put("clientUuid", request.getClientUuid());
+
+                messagingTemplate.convertAndSendToUser(
+                        principal.getName(),
+                        "/queue/errors",
+                        errorPayload // "일반 회원은 이동할 수 없습니다" 텍스트 전송
+                );
             }
-            messagingTemplate.convertAndSendToUser(
-                    principal.getName(),
-                    "/queue/errors",
-                    e.getMessage() // "일반 회원은 이동할 수 없습니다" 텍스트 전송
-            );
+
         }
     }
 
