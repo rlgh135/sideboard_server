@@ -22,7 +22,7 @@ public class LoginUserArgumentResolver implements HandlerMethodArgumentResolver 
         return isLoginUserAnnotation && isUserClass;
     }
 
-    // 조건이 맞으면 실행: 세션에서 LOGIN_USER를 꺼내서 반환
+    // 조건이 맞으면 세션에서 LOGIN_USER를 꺼내서 반환
     @Override
     public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
         HttpServletRequest request = (HttpServletRequest)  webRequest.getNativeRequest();

@@ -20,13 +20,11 @@ public class CardController {
 
     private final CardService cardService;
 
-    // 1. 카드 상세 조회 (모달 열 때 사용)
     @GetMapping("/api/cards/{id}")
     public ResponseEntity<Card> getCards(@PathVariable Long id) {
         return ResponseEntity.ok(cardService.getCards(id));
     }
 
-    // 2. 카드 등록
     @PostMapping("/api/cards")
     public ResponseEntity<Card> createCard(@RequestBody CardRequest request, @LoginUser User user) {
         if (user == null) {
@@ -35,7 +33,6 @@ public class CardController {
         return ResponseEntity.ok(cardService.createCard(request));
     }
 
-    // 3. 카드 수정
     @PutMapping("/api/cards/{id}")
     public ResponseEntity<Card> updateCard(@PathVariable Long id, @RequestBody CardRequest request, @LoginUser User user) {
         if (user == null) throw new IllegalArgumentException("로그인이 필요합니다.");
